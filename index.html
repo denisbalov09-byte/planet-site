@@ -3,111 +3,128 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="theme-color" content="#101010">
-<title>PLANET</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0d0b">
+<title>PLANET — Neon Store</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
 :root {
-  color-scheme: dark;
-  --bg: #101010;
-  --card: #1b1b1b;
-  --line: #333;
-  --text: #f5f5f5;
-  --muted: #999;
-  --accent: #fff;
+  --bg:#0b0d0b;
+  --card:#151815;
+  --line:#292e29;
+  --green:#c2ff55;
+  --muted:#969d94;
+  --white:#f5f7f2;
 }
-* { box-sizing: border-box; }
+* { box-sizing:border-box; }
 body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin:0; background:var(--bg); color:var(--white);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
-button { font: inherit; cursor: pointer; }
-button:focus-visible { outline: 2px solid white; outline-offset: 3px; }
-.app { max-width: 650px; margin: auto; padding: 22px 16px 110px; }
+button { font:inherit; cursor:pointer; }
+button:focus-visible { outline:2px solid var(--green); outline-offset:3px; }
+.app { max-width:680px; margin:auto; padding:20px 16px 110px; }
 header {
-  display: flex; justify-content: space-between; align-items: center;
-  padding-bottom: 20px; border-bottom: 1px solid var(--line);
+  display:flex; justify-content:space-between; align-items:center;
+  border-bottom:1px solid var(--line); padding-bottom:18px;
 }
-.logo { font-size: 25px; font-weight: 900; letter-spacing: 5px; }
-.subtitle { color: var(--muted); font-size: 10px; letter-spacing: 3px; margin-top: 5px; }
+.brand { font-size:25px; font-weight:900; letter-spacing:5px; }
+.brand span { color:var(--green); }
+.overline { font-size:10px; color:var(--muted); letter-spacing:3px; margin-top:5px; }
 .cart-top {
-  background: var(--card); border: 1px solid var(--line);
-  color: white; border-radius: 12px; padding: 11px 14px;
+  border:1px solid #414b38; background:#1b2117; color:var(--green);
+  padding:11px 13px; border-radius:12px; font-weight:700;
 }
-.hero { padding: 30px 0 24px; }
-.eyebrow { font-size: 11px; letter-spacing: 3px; color: var(--muted); }
-h1 { font-size: 34px; line-height: 1.05; margin: 12px 0; letter-spacing: -1px; }
-.hero p { color: var(--muted); font-size: 14px; line-height: 1.6; }
-.section-title {
-  display: flex; justify-content: space-between; align-items: center;
-  margin: 24px 0 14px; font-size: 17px; font-weight: 750;
+.hero {
+  margin:24px 0; padding:25px 20px; border-radius:20px;
+  background:radial-gradient(ellipse at 100% 0%,#344622 0%,#192017 35%,#141714 75%);
+  border:1px solid #35412b; overflow:hidden; position:relative;
 }
+.hero:after {
+  content:"✳"; position:absolute; right:12px; top:10px;
+  color:#c2ff5520; font-size:110px; transform:rotate(-15deg);
+}
+.tag {
+  display:inline-block; padding:7px 10px; border:1px solid #607a3b;
+  border-radius:7px; color:var(--green); font-size:10px; letter-spacing:2px;
+}
+h1 { font-size:36px; line-height:1.04; letter-spacing:-1.5px; margin:19px 0 10px; position:relative; z-index:1; }
+h1 span { color:var(--green); }
+.hero p { color:#b2b9ac; font-size:13px; line-height:1.6; max-width:280px; }
+.section-head {
+  display:flex; justify-content:space-between; align-items:center;
+  margin:25px 0 13px;
+}
+.section-head h2 { font-size:17px; margin:0; }
+.small { color:var(--muted); font-size:10px; letter-spacing:1px; }
 .categories {
-  display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px;
-  scrollbar-width: none;
+  display:flex; gap:8px; overflow-x:auto; padding-bottom:8px;
+  scrollbar-width:none;
 }
-.categories::-webkit-scrollbar { display: none; }
+.categories::-webkit-scrollbar { display:none; }
 .chip {
-  flex: 0 0 auto; border: 1px solid var(--line); background: transparent;
-  color: #ccc; border-radius: 10px; padding: 10px 13px; font-size: 12px;
+  flex:0 0 auto; background:#151815; border:1px solid var(--line);
+  color:#c3c9bf; border-radius:10px; padding:11px 13px; font-size:12px;
 }
-.chip.active { background: white; color: black; border-color: white; }
-.products { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.chip.active { background:var(--green); color:#10130c; border-color:var(--green); font-weight:800; }
+.products { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:11px; }
 .product {
-  min-width: 0; background: var(--card); border: 1px solid #292929;
-  border-radius: 15px; padding: 14px; display: flex; flex-direction: column;
+  background:linear-gradient(145deg,#191d18,#111311);
+  border:1px solid var(--line); border-radius:16px; padding:12px;
+  display:flex; flex-direction:column; min-width:0;
+  transition:border-color .2s;
 }
-.product-mark {
-  height: 74px; border-radius: 10px; background: #242424;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 28px; margin-bottom: 13px;
+.product:active { border-color:var(--green); }
+.product-art {
+  height:94px; display:flex; justify-content:center; align-items:center;
+  background:radial-gradient(ellipse,#303b24,#171a15 72%);
+  border:1px solid #282f23; border-radius:11px; margin-bottom:13px;
+  color:var(--green); font-size:31px; font-weight:900;
 }
-.product-name { font-size: 13px; line-height: 1.45; font-weight: 600; flex: 1; }
-.product-category { font-size: 10px; color: var(--muted); margin: 8px 0 12px; }
+.product-name { font-size:13px; font-weight:650; line-height:1.45; flex:1; overflow-wrap:anywhere; }
+.product-category { color:var(--muted); font-size:10px; margin:8px 0 12px; }
 .add {
-  border: 0; border-radius: 9px; background: white; color: black;
-  padding: 11px 6px; font-size: 12px; font-weight: 750;
+  border:0; border-radius:9px; padding:11px 5px;
+  background:var(--green); color:#11150b; font-size:11px; font-weight:900;
 }
-.add.added { background: #333; color: white; }
-.empty { grid-column: 1/-1; color: var(--muted); padding: 24px 0; }
+.add.added { background:#28351e; color:var(--green); border:1px solid #536b36; }
+.panel { display:none; }
+.panel.active { display:block; }
 .bottom {
-  position: fixed; bottom: 0; left: 0; right: 0;
-  background: rgba(16,16,16,.96); border-top: 1px solid var(--line);
-  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
-  display: flex; gap: 10px; justify-content: center;
+  position:fixed; z-index:5; bottom:0; left:0; right:0;
+  background:#0b0d0bf2; border-top:1px solid var(--line);
+  padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+  display:flex; justify-content:center;
 }
 .bottom button {
-  max-width: 618px; width: 100%; border: 0; border-radius: 12px;
-  padding: 15px; font-weight: 800; background: white; color: black;
+  width:100%; max-width:648px; border:0; border-radius:12px;
+  background:var(--green); color:#10130b; padding:16px; font-weight:900;
 }
-.bottom button:disabled { background: #333; color: #888; }
-.panel { display: none; }
-.panel.active { display: block; }
+.bottom button:disabled { background:#2b3028; color:#777; }
 .cart-row {
-  background: var(--card); padding: 14px; border-radius: 12px;
-  margin-bottom: 9px; display: flex; gap: 10px; align-items: center;
+  display:flex; align-items:center; gap:10px; padding:13px;
+  background:var(--card); border:1px solid var(--line);
+  border-radius:12px; margin-bottom:9px;
 }
-.cart-name { flex: 1; font-size: 13px; line-height: 1.4; }
-.qty { display: flex; align-items: center; gap: 10px; }
+.cart-name { flex:1; font-size:12px; line-height:1.45; }
+.qty { display:flex; align-items:center; gap:8px; }
 .qty button {
-  background: #333; color: white; border: 0; border-radius: 8px;
-  width: 30px; height: 30px;
+  width:30px; height:30px; border-radius:8px; border:1px solid #41483a;
+  background:#242a20; color:var(--green);
 }
-.links { display: flex; gap: 10px; margin-top: 28px; }
+.empty { padding:25px 0; color:var(--muted); font-size:13px; }
+.links { display:flex; gap:9px; margin-top:26px; }
 .links a {
-  flex: 1; text-align: center; text-decoration: none; color: white;
-  border: 1px solid var(--line); border-radius: 10px; padding: 13px 5px;
-  font-size: 12px;
+  flex:1; padding:13px 5px; text-align:center; text-decoration:none;
+  color:var(--green); border:1px solid #3b4930; background:#151a12;
+  border-radius:10px; font-size:11px; font-weight:750;
 }
-.note { font-size: 11px; color: var(--muted); line-height: 1.6; margin-top: 20px; }
-@media (max-width: 360px) {
-  .app { padding-left: 12px; padding-right: 12px; }
-  h1 { font-size: 29px; }
-  .products { gap: 8px; }
-  .product { padding: 10px; }
+.note { color:var(--muted); font-size:11px; line-height:1.6; margin-top:17px; }
+@media(max-width:360px) {
+  .app { padding-left:12px; padding-right:12px; }
+  h1 { font-size:31px; }
+  .product { padding:9px; }
+  .product-art { height:78px; }
 }
 </style>
 </head>
@@ -115,40 +132,44 @@ h1 { font-size: 34px; line-height: 1.05; margin: 12px 0; letter-spacing: -1px; }
 <div class="app">
   <header>
     <div>
-      <div class="logo">PLANET</div>
-      <div class="subtitle">CATALOGUE / STORE</div>
+      <div class="brand">PLANET<span>.</span></div>
+      <div class="overline">NEON STORE / CATALOGUE</div>
     </div>
-    <button class="cart-top" onclick="showCart()">Корзина <span id="cartCount">0</span></button>
+    <button class="cart-top" onclick="showCart()">BAG <span id="cartCount">0</span></button>
   </header>
 
   <section class="hero">
-    <div class="eyebrow">КАТАЛОГ ТОВАРОВ</div>
-    <h1>ТВОЙ ВЫБОР.<br>ТВОЙ PLANET.</h1>
-    <p>Каталог товаров и комплектующих.<br>Выбери категорию и добавь товары в корзину.</p>
+    <span class="tag">COLLECTION / 2026</span>
+    <h1>ТВОЙ ВЫБОР.<br><span>ТВОЙ PLANET.</span></h1>
+    <p>Каталог товаров в одном месте. Выбирай категорию, собирай корзину и уточняй заказ у менеджера.</p>
   </section>
 
   <section id="catalog" class="panel active">
-    <div class="section-title"><span>Категории</span><span class="eyebrow">01 — 05</span></div>
+    <div class="section-head">
+      <h2>Категории</h2><span class="small">SELECT / CATEGORY</span>
+    </div>
     <div id="categories" class="categories"></div>
-    <div class="section-title"><span id="listTitle">Все товары</span><span class="eyebrow" id="itemCount"></span></div>
+    <div class="section-head">
+      <h2 id="listTitle">Все товары</h2><span id="itemCount" class="small"></span>
+    </div>
     <div id="products" class="products"></div>
   </section>
 
   <section id="cart" class="panel">
-    <div class="section-title"><span>Твоя корзина</span><span class="eyebrow">ORDER</span></div>
+    <div class="section-head"><h2>Твоя корзина</h2><span class="small">YOUR ORDER</span></div>
     <div id="cartItems"></div>
-    <p class="note">Цены не указаны в каталоге. Итоговую стоимость и наличие уточнит менеджер.</p>
+    <p class="note">Стоимость и наличие необходимо подтвердить у менеджера. Цены в каталоге пока не указаны.</p>
   </section>
 
   <div class="links">
-    <a href="https://t.me/ManagerSantrezo" onclick="openTelegram(event, 'https://t.me/ManagerSantrezo')">ПОДДЕРЖКА ↗</a>
-    <a href="https://t.me/otziviplanet" onclick="openTelegram(event, 'https://t.me/otziviplanet')">ОТЗЫВЫ ↗</a>
+    <a href="https://t.me/ManagerSantrezo" onclick="openTelegram(event,'https://t.me/ManagerSantrezo')">МЕНЕДЖЕР ↗</a>
+    <a href="https://t.me/otziviplanet" onclick="openTelegram(event,'https://t.me/otziviplanet')">ОТЗЫВЫ ↗</a>
   </div>
-  <div class="note">PLANET · Каталог товаров. Заказы подтверждаются менеджером.</div>
+  <p class="note">PLANET / OFFICIAL CATALOGUE</p>
 </div>
 
 <div class="bottom">
-  <button id="mainAction" onclick="mainAction()">ОТКРЫТЬ КАТАЛОГ</button>
+  <button id="mainAction" onclick="mainAction()">ОТКРЫТЬ КОРЗИНУ</button>
 </div>
 
 <script>
@@ -156,167 +177,152 @@ const tg = window.Telegram?.WebApp;
 if (tg) {
   tg.ready();
   tg.expand();
-  tg.setHeaderColor('#101010');
-  tg.setBackgroundColor('#101010');
+  tg.setHeaderColor('#0b0d0b');
+  tg.setBackgroundColor('#0b0d0b');
 }
 
 const manager = 'https://t.me/ManagerSantrezo';
 
 const categories = [
-  { id: 'all', name: 'Все товары' },
-  { id: 'monashka7', name: 'Монашка 7%' },
-  { id: 'monashka8', name: 'Монашка 8% бабл' },
-  { id: 'rickmorty', name: 'Rick and Morty' },
-  { id: 'cartridges', name: 'Картриджи' },
-  { id: 'coils', name: 'Испарители' }
+  {id:'all',name:'Все товары'},
+  {id:'monashka7',name:'Монашка 7%'},
+  {id:'monashka8',name:'Монашка 8% бабл'},
+  {id:'rickmorty',name:'Rick and Morty'},
+  {id:'cartridges',name:'Картриджи'},
+  {id:'coils',name:'Испарители'}
 ];
 
 const products = [
-  {id:'m7a',cat:'monashka7',name:'Клубника-Киви'},
-  {id:'m7b',cat:'monashka7',name:'Арбуз-Дыня'},
-  {id:'m7c',cat:'monashka7',name:'Лесные ягоды'},
-  {id:'m7d',cat:'monashka7',name:'Кислый чупа-чупс с холодком'},
-  {id:'m7e',cat:'monashka7',name:'Клубничный лимонад'},
+  {id:'m7a',cat:'monashka7',name:'Клубника-Киви',mark:'01'},
+  {id:'m7b',cat:'monashka7',name:'Арбуз-Дыня',mark:'02'},
+  {id:'m7c',cat:'monashka7',name:'Лесные ягоды',mark:'03'},
+  {id:'m7d',cat:'monashka7',name:'Кислый чупа-чупс с холодком',mark:'04'},
+  {id:'m7e',cat:'monashka7',name:'Клубничный лимонад',mark:'05'},
 
-  {id:'m8a',cat:'monashka8',name:'Виноградная жвачка'},
-  {id:'m8b',cat:'monashka8',name:'Клубничный Бабл-Гам'},
-  {id:'m8c',cat:'monashka8',name:'Кислый Земляничный Чупа-Чупс'},
-  {id:'m8d',cat:'monashka8',name:'Смородиновый Холс'},
-  {id:'m8e',cat:'monashka8',name:'Жвачка с Кислой Малиной'},
-  {id:'m8f',cat:'monashka8',name:'Арбузная Конфета'},
-  {id:'m8g',cat:'monashka8',name:'Арбуз, Дыня, Жвачка'},
-  {id:'m8h',cat:'monashka8',name:'Ежевика, Виноград, Ментос'},
-  {id:'m8i',cat:'monashka8',name:'Виноградный Скиттлс'},
+  {id:'m8a',cat:'monashka8',name:'Виноградная жвачка',mark:'01'},
+  {id:'m8b',cat:'monashka8',name:'Клубничный Бабл-Гам',mark:'02'},
+  {id:'m8c',cat:'monashka8',name:'Кислый Земляничный Чупа-Чупс',mark:'03'},
+  {id:'m8d',cat:'monashka8',name:'Смородиновый Холс',mark:'04'},
+  {id:'m8e',cat:'monashka8',name:'Жвачка с Кислой Малиной',mark:'05'},
+  {id:'m8f',cat:'monashka8',name:'Арбузная Конфета',mark:'06'},
+  {id:'m8g',cat:'monashka8',name:'Арбуз, Дыня, Жвачка',mark:'07'},
+  {id:'m8h',cat:'monashka8',name:'Ежевика, Виноград, Ментос',mark:'08'},
+  {id:'m8i',cat:'monashka8',name:'Виноградный Скиттлс',mark:'09'},
 
-  {id:'rma',cat:'rickmorty',name:'Спрайт Арбуз Лайм'},
-  {id:'rmb',cat:'rickmorty',name:'Вишневая бомба'},
-  {id:'rmc',cat:'rickmorty',name:'Виноградный чупа-чупс'},
-  {id:'rmd',cat:'rickmorty',name:'Киви Лайм'},
+  {id:'rma',cat:'rickmorty',name:'Спрайт Арбуз Лайм',mark:'01'},
+  {id:'rmb',cat:'rickmorty',name:'Вишневая бомба',mark:'02'},
+  {id:'rmc',cat:'rickmorty',name:'Виноградный чупа-чупс',mark:'03'},
+  {id:'rmd',cat:'rickmorty',name:'Киви Лайм',mark:'04'},
 
-  {id:'c04',cat:'cartridges',name:'Картридж Xros 0,4 3ml Corex 3.0 (4 шт./упак.)'},
-  {id:'c08',cat:'cartridges',name:'Картридж Xros 0,8 2ml Corex 3.0 (4 шт./упак.)'},
+  {id:'c04',cat:'cartridges',name:'Картридж Xros 0,4 3ml Corex 3.0 (4 шт./упак.)',mark:'X'},
+  {id:'c08',cat:'cartridges',name:'Картридж Xros 0,8 2ml Corex 3.0 (4 шт./упак.)',mark:'X'},
 
-  {id:'k5',cat:'coils',name:'Испаритель Smoant Knight 80/Pasito 2 K-5 0.15 ом (3 шт./упак.)'},
-  {id:'k4',cat:'coils',name:'Испаритель Smoant Knight 80/Pasito 2 K-4 0.2 ом'}
+  {id:'k5',cat:'coils',name:'Испаритель Smoant Knight 80/Pasito 2 K-5 0.15 ом (3 шт./упак.)',mark:'K5'},
+  {id:'k4',cat:'coils',name:'Испаритель Smoant Knight 80/Pasito 2 K-4 0.2 ом',mark:'K4'}
 ];
 
-const categoryNames = Object.fromEntries(categories.map(c => [c.id, c.name]));
+const categoryNames = Object.fromEntries(categories.map(c => [c.id,c.name]));
 const cart = {};
 let selected = 'all';
 let page = 'catalog';
 
 function renderCategories() {
   document.getElementById('categories').innerHTML = categories.map(c =>
-    `<button class="chip ${selected === c.id ? 'active' : ''}"
-      onclick="selectCategory('${c.id}')">${c.name}</button>`
+    `<button class="chip ${selected===c.id?'active':''}" onclick="selectCategory('${c.id}')">${c.name}</button>`
   ).join('');
 }
 
 function renderProducts() {
-  const list = selected === 'all'
-    ? products
-    : products.filter(p => p.cat === selected);
-
+  const list = selected==='all' ? products : products.filter(p=>p.cat===selected);
   document.getElementById('listTitle').textContent = categoryNames[selected];
-  document.getElementById('itemCount').textContent = `${list.length} товаров`;
+  document.getElementById('itemCount').textContent = `${list.length} ITEMS`;
 
-  document.getElementById('products').innerHTML = list.map(p => `
+  document.getElementById('products').innerHTML = list.map(p=>`
     <article class="product">
-      <div class="product-mark">◼</div>
+      <div class="product-art">${p.mark}</div>
       <div class="product-name">${p.name}</div>
       <div class="product-category">${categoryNames[p.cat]}</div>
-      <button class="add ${cart[p.id] ? 'added' : ''}"
-        onclick="changeQty('${p.id}', 1)">
-        ${cart[p.id] ? 'В корзине: ' + cart[p.id] + '  +' : '＋ ДОБАВИТЬ'}
+      <button class="add ${cart[p.id]?'added':''}" onclick="changeQty('${p.id}',1)">
+        ${cart[p.id]?'В КОРЗИНЕ · '+cart[p.id]+'  +':'＋ ДОБАВИТЬ'}
       </button>
     </article>
   `).join('');
 }
 
 function selectCategory(id) {
-  selected = id;
+  selected=id;
   renderCategories();
   renderProducts();
 }
 
-function changeQty(id, delta) {
-  cart[id] = (cart[id] || 0) + delta;
-  if (cart[id] <= 0) delete cart[id];
+function changeQty(id,delta) {
+  cart[id]=(cart[id]||0)+delta;
+  if(cart[id]<=0) delete cart[id];
   updateCart();
-  if (page === 'catalog') renderProducts();
+  if(page==='catalog') renderProducts();
+  if(tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
 }
 
 function updateCart() {
-  const count = Object.values(cart).reduce((a,b) => a+b, 0);
-  document.getElementById('cartCount').textContent = count;
-  document.getElementById('mainAction').textContent =
-    page === 'cart' ? 'ОФОРМИТЬ ЗАКАЗ' : `КОРЗИНА · ${count}`;
+  const count=Object.values(cart).reduce((a,b)=>a+b,0);
+  document.getElementById('cartCount').textContent=count;
+  document.getElementById('mainAction').textContent=
+    page==='cart' ? (count?'ОФОРМИТЬ ЗАКАЗ':'ВЕРНУТЬСЯ В КАТАЛОГ') : `ОТКРЫТЬ КОРЗИНУ · ${count}`;
 
-  const entries = products.filter(p => cart[p.id]);
-  document.getElementById('cartItems').innerHTML = entries.length
-    ? entries.map(p => `
+  const entries=products.filter(p=>cart[p.id]);
+  document.getElementById('cartItems').innerHTML=entries.length
+    ? entries.map(p=>`
       <div class="cart-row">
         <div class="cart-name">${p.name}</div>
         <div class="qty">
-          <button onclick="changeQty('${p.id}', -1)">−</button>
+          <button onclick="changeQty('${p.id}',-1)">−</button>
           <span>${cart[p.id]}</span>
-          <button onclick="changeQty('${p.id}', 1)">+</button>
+          <button onclick="changeQty('${p.id}',1)">+</button>
         </div>
       </div>
     `).join('')
-    : '<div class="empty">Корзина пока пуста.</div>';
+    : '<div class="empty">Корзина пуста. Добавь товары из каталога.</div>';
 }
 
 function showCart() {
-  page = 'cart';
+  page='cart';
   document.getElementById('catalog').classList.remove('active');
   document.getElementById('cart').classList.add('active');
-  document.getElementById('mainAction').textContent =
-    Object.keys(cart).length ? 'ОФОРМИТЬ ЗАКАЗ' : 'ВЕРНУТЬСЯ В КАТАЛОГ';
   updateCart();
-  window.scrollTo(0, 0);
+  window.scrollTo(0,0);
 }
 
 function showCatalog() {
-  page = 'catalog';
+  page='catalog';
   document.getElementById('cart').classList.remove('active');
   document.getElementById('catalog').classList.add('active');
   renderCategories();
   renderProducts();
   updateCart();
-  window.scrollTo(0, 0);
+  window.scrollTo(0,0);
 }
 
 function mainAction() {
-  if (page === 'catalog') {
+  if(page==='catalog') {
     showCart();
     return;
   }
-
-  if (!Object.keys(cart).length) {
+  if(!Object.keys(cart).length) {
     showCatalog();
     return;
   }
 
-  const lines = products
-    .filter(p => cart[p.id])
-    .map(p => `• ${p.name} — ${cart[p.id]} шт.`);
+  const lines=products.filter(p=>cart[p.id]).map(p=>`• ${p.name} — ${cart[p.id]} шт.`);
+  const orderText='Здравствуйте! Хочу оформить заказ:\n\n'+lines.join('\n')+
+    '\n\nПожалуйста, уточните наличие и стоимость.';
 
-  const orderText = 'Здравствуйте! Хочу уточнить заказ:\n\n'
-    + lines.join('\n')
-    + '\n\nПрошу подтвердить наличие и стоимость.';
-
-  const url = manager + '?text=' + encodeURIComponent(orderText);
-
-  if (tg) {
-    tg.openTelegramLink(url);
-  } else {
-    window.open(url, '_blank');
-  }
+  const url=manager+'?text='+encodeURIComponent(orderText);
+  if(tg) tg.openTelegramLink(url);
+  else window.open(url,'_blank','noopener');
 }
 
-function openTelegram(event, url) {
-  if (tg) {
+function openTelegram(event,url) {
+  if(tg) {
     event.preventDefault();
     tg.openTelegramLink(url);
   }
